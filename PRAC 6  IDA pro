@@ -1,0 +1,65 @@
+Practical 6: Analyzing Malware Executables Using IDA Pro
+Aim
+
+To analyze executable files using IDA Pro and understand their structure and behavior through disassembly.
+
+Objectives
+To understand the use of IDA Pro in malware analysis
+To install and run IDA Pro on Linux
+To load and analyze executable files
+To examine functions, strings, and control flow
+To interpret disassembled instructions
+Procedure (Step-by-Step on Linux)
+Step 1: Download IDA Free
+Download IDA Free for Linux from the official website (Hex-Rays)
+Step 2: Install IDA Pro
+
+Open terminal and navigate to Downloads:
+
+cd Downloads
+
+Make the installer executable:
+
+chmod +x ida-free-*.run
+
+Run the installer:
+
+./ida-free-*.run
+
+Follow the installation steps.
+
+Step 3: Launch IDA
+cd ~/ida-free
+./ida64
+Step 4: Load the executable file
+Click New
+Select the sample file (sample.exe)
+Click OK
+Allow IDA to perform auto-analysis
+Step 5: Analyze strings
+Go to: View → Open subviews → Strings
+
+👉 Displays readable strings such as URLs, commands, etc.
+
+Step 6: Analyze functions
+Go to: View → Open subviews → Functions
+
+👉 Shows all detected functions in the program.
+
+Step 7: View control flow (Graph View)
+Press Spacebar
+
+👉 Displays flow of execution using a graph.
+
+Step 8: Examine assembly instructions
+Observe instructions like:
+mov → data movement
+call → function calls
+cmp and jumps → conditions
+Outcome
+
+The executable file was successfully loaded into IDA Pro and analyzed using various views such as strings, functions, and graph view.
+
+Result
+
+IDA Pro provided a detailed disassembly of the executable, allowing analysis of its internal structure, control flow, and embedded strings without executing the file.
