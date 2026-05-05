@@ -1,0 +1,56 @@
+Practical 5: Understanding How High-Level C Language Constructs are Translated into Assembly Language
+Aim
+
+To understand how high-level C language constructs are translated into assembly language instructions.
+
+Objectives
+To write a simple C program
+To compile the program using GCC
+To generate assembly code from C source code
+To analyze how constructs like variables, arithmetic operations, and conditional statements are translated into assembly
+Procedure (Step-by-Step on Linux)
+Step 1: Create a C program
+nano test.c
+
+Add the following code:
+
+#include <stdio.h>
+
+int main() {
+    int a = 5;
+    int b = 3;
+    int c = a + b;
+
+    if (c > 5) {
+        printf("Greater\n");
+    } else {
+        printf("Smaller\n");
+    }
+
+    return 0;
+}
+Step 2: Compile the program
+gcc test.c -o test
+
+Run the program:
+
+./test
+Step 3: Generate assembly code
+gcc -S test.c
+
+This generates an assembly file named test.s.
+
+Step 4: View assembly code
+cat test.s
+Step 5: Analyze the translation
+Variables (a, b, c) are stored in registers or memory
+Arithmetic operation (a + b) is translated into add instruction
+Conditional statement (if-else) is translated into comparison (cmp) and jump instructions (jg, jl, etc.)
+Function call (printf) is represented using call instruction
+Outcome
+
+The C program was successfully compiled and converted into assembly code, demonstrating how high-level constructs are translated into low-level instructions.
+
+Result
+
+The assembly output showed how variables, arithmetic operations, and conditional statements in C are represented using low-level instructions such as mov, add, cmp, and call.
