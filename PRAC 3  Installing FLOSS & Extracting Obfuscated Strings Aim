@@ -1,0 +1,53 @@
+Practical 3: Installing FLOSS & Extracting Obfuscated Strings
+Aim
+
+To install FLOSS and use it to extract decoded and obfuscated strings from a binary file.
+
+Objectives
+To understand string obfuscation in binaries
+To install FLOSS in a Linux environment
+To extract hidden and decoded strings using FLOSS
+To compare output of strings and FLOSS
+Procedure (Step-by-Step on Linux)
+Step 1: Create a test executable (safe sample)
+Create a C file:
+nano obf_sample.c
+Add the following code:
+#include <stdio.h>
+
+int main() {
+    char s1[] = "cmd.exe";
+    char s2[] = "http://malicious-site.com";
+    printf("Simulated execution\n");
+    return 0;
+}
+Compile into Windows executable:
+sudo apt install mingw-w64
+x86_64-w64-mingw32-gcc obf_sample.c -o sample.exe
+Step 2: Install FLOSS (using pipx method)
+Install pipx:
+sudo apt install pipx
+Enable pipx:
+pipx ensurepath
+Restart terminal or run:
+source ~/.bashrc
+Install FLOSS:
+pipx install flare-floss
+Verify installation:
+floss --help
+Step 3: Extract normal strings (baseline analysis)
+strings sample.exe | head
+Step 4: Extract obfuscated/decoded strings using FLOSS
+floss sample.exe
+Step 5: Save output (optional)
+floss sample.exe > floss_output.txt
+🎯 What to Demonstrate
+strings sample.exe | head
+floss sample.exe | head
+🧪 Outcome
+
+FLOSS was successfully installed using pipx and used to extract decoded and hidden strings from the executable. The tool demonstrated its ability to reveal additional information not visible through basic string extraction.
+
+📊 Result
+
+The analysis showed that while the strings command extracts visible text, FLOSS provides deeper insights by decoding hidden or obfuscated strings, making it a powerful tool in malware analysis.
