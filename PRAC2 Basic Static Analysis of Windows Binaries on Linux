@@ -1,0 +1,58 @@
+Practical 2: Basic Static Analysis of Windows Binaries on Linux
+Aim
+
+To perform basic static analysis of Windows executable files using Linux-based tools without executing the binary.
+
+Objectives
+To identify the type and structure of a Windows executable
+To extract readable and hidden strings from the binary
+To analyze metadata and embedded content
+To study the internal structure using disassembly tools
+To understand indicators of suspicious behavior in binaries
+Procedure (Step-by-Step on Linux)
+Step 1: Create a test executable (safe sample)
+
+A sample Windows executable was created to simulate a suspicious file.
+
+Create a C file:
+nano fake_malware.c
+Add the following code:
+#include <stdio.h>
+
+int main() {
+    printf("Connecting to http://malicious-site.com\n");
+    printf("Executing cmd.exe\n");
+    printf("Downloading payload...\n");
+    return 0;
+}
+Install MinGW compiler:
+sudo apt install mingw-w64
+Compile into Windows executable:
+x86_64-w64-mingw32-gcc fake_malware.c -o sample.exe
+Step 2: Identify file type
+file sample.exe
+Confirms the file is a Windows Portable Executable (PE).
+Step 3: Extract strings from binary
+strings sample.exe | head
+
+To detect suspicious content:
+
+strings sample.exe | grep -i "http"
+strings sample.exe | grep -i "cmd"
+Step 4: Analyze metadata using ExifTool
+exiftool sample.exe
+Step 5: Detect embedded data using Binwalk
+binwalk sample.exe
+Step 6: Inspect binary structure using Objdump
+objdump -x sample.exe | head
+
+Optional:
+
+objdump -d sample.exe | head
+Outcome
+
+A safe sample executable was created and successfully analyzed using static analysis tools. Important information such as file type, strings, metadata, and structure was extracted without executing the file.
+
+Result
+
+The generated executable was identified as a Windows PE file. Static analysis tools (strings, exiftool, binwalk, objdump) successfully revealed embedded strings and structural details, demonstrating how suspicious indicators can be identified without running the program.
