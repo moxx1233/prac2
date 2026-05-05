@@ -1,0 +1,356 @@
+PRACTICAL – 1
+Aim:
+
+Setting up and configuring a Malware analysis Lab (Kali Linux)
+
+Objectives:
+Install virtualization software and create a resource optimized Kali Linux VM.
+Configure network isolation to prevent malware C2 communication.
+Install comprehensive static analysis tools.
+Create safe file transfer mechanism and clean baseline snapshot.
+Procedure:
+
+(i) Install virtualization software (e.g., VirtualBox) & enable VT-x/AMD-V
+(ii) Create a Kali Linux VM with required RAM, CPU & disk
+(iii) Install Kali Linux using ISO & verify successful boot
+(iv) Configure network isolation (Host-only adapter, disable internet)
+(v) Adjust system settings (disable updates, enable file visibility, configure firewall)
+(vi) Install malware analysis tools (Wireshark, strings, objdump etc.)
+(vii) Create a shared folder for safe file transfer (disable after use)
+(viii) Take a clean snapshot of the VM for recovery
+
+Observations:
+VM boot cleanly with 4GB RAM, network isolation
+All tools are installed for analysis of malware
+Shared folder mounted for file transfer
+Snapshot taken to restore VM to pre-analysis baseline within 30 seconds
+Result:
+We have successfully created a secure malware analysis lab
+Environment features network isolation, comprehensive toolset, safe file transfer via shared folder, and snapshot-based rapid recovery
+
+
+
+
+
+PRACTICAL – 2
+Aim:
+
+To perform basic static analysis of windows binaries on a Linux platform.
+
+Objectives:
+To examine windows binaries without executing them
+To extract hidden information such as strings, metadata and structure
+To identify suspicious patterns in malware samples
+Procedure:
+
+(i) Open terminal in Kali Linux
+(ii) Place the windows binary file in the working directory
+(iii) Use the following tools:
+
+Check file type
+
+file sample.exe
+
+Extract readable strings
+
+strings sample.exe
+
+View metadata
+
+exiftool sample.exe
+
+Analyze binary structure
+
+binwalk sample.exe
+
+Check dependencies
+
+objdump -x sample.exe
+Observations:
+
+Strings reveal readable text like URLs, file paths or commands
+exiftool shows metadata
+binwalk detects embedded files or packed data
+objdump shows headers & sections of the binary
+
+Result:
+
+Basic static analysis of windows binary was successfully performed on Linux without executing the file.
+
+
+
+
+
+PRACTICAL – 3
+Aim:
+
+To install flare floss and extract decoded & obfuscated strings
+
+Objectives:
+To identify hidden and obfuscated strings in malware
+To decode encoded strings automatically
+To assist in malware static analysis
+Procedure:
+(i) Install FLOSS in Kali Linux
+sudo apt update
+sudo apt install floss -y
+(ii) Verify Installation
+floss --help
+(iii) Place sample file
+Copy windows binary into working directory
+(iv) Extract strings using FLOSS
+
+Basic extraction
+
+floss sample.exe
+Save output
+Analysis Output:
+
+FLOSS will extract:
+
+Decoded strings
+Deobfuscated strings
+Stack strings
+Hidden API calls & URLs
+
+Observation:
+FLOSS reveals strings not visible with normal strings command
+It detects encoded/obfuscated data used by malware
+Useful for identifying:
+URLs
+File paths
+Commands
+API functions
+
+Result:
+
+FLOSS was successfully installed & used to extract decoded and obfuscated strings from windows binary.
+
+
+
+
+
+
+
+PRACTICAL – 4
+Aim:
+
+To create and apply YARA rules for identifying malware based on patterns and signatures.
+
+Objectives:
+To understand the purpose of YARA in malware detection
+To install and use YARA in a windows environment
+To create a simple YARA rule file
+To scan a test file using the created rule
+To observe how YARA identifies suspicious content based on matching strings
+Procedure:
+(i) Installation of YARA
+
+a. Download YARA
+
+Visit official GitHub page of YARA
+Download latest release for your OS
+
+b. Install YARA
+
+Extract downloaded file
+Add YARA folder to system path
+
+c. Verify installation
+
+Open cmd prompt
+Type:
+yara --version
+Confirm installation is successful
+(ii) Writing YARA rules
+
+a. Create rule file
+
+Open text editor
+Save file as sample_rule.yar
+
+b. Write basic YARA rule
+
+rule suspicious_string
+{
+    strings:
+        $a = "malware"
+        $b = "hack"
+        $c = "cmd.exe"
+
+    condition:
+        any of them
+}
+
+c. Save the file
+
+(iii) Applying YARA rule
+
+a. Run YARA scan
+
+Open command prompt
+Execute:
+yara rule.yar suspicious_file.exe
+
+b. Analyze output
+
+If matched: rule name will be displayed
+If no match: no output
+(iv) Advanced rule (optional)
+
+a. Add file size condition
+
+filesize < 1MB and any of them
+
+b. Use multiple conditions
+
+Combine strings & logic for accuracy
+Observation:
+YARA executed successfully from the command line
+The rule file "sample_rule.yar" was created without errors
+The test file contained the word "malware"
+When the scan command was run, YARA matched the string in the file
+The output displayed the rule name and the file name, showing that the rule worked correctly
+Result:
+
+The practical was completed successfully. A YARA rule was created and applied to a test file. The tool correctly detected the suspicious strings present in the file, demonstrating how YARA can be used for malware detection based on patterns and signatures.
+
+
+
+
+PRACTICAL – 5
+Aim:
+
+To understand how high-level C language constructs are translated into assembly language.
+
+Objectives:
+To write a simple C program
+To convert the C program into assembly code using GCC
+To study how variables, arithmetic operations & function calls appear in assembly
+To understand basic stack & register usage during program execution
+To relate high-level program logic with low-level machine instructions
+Procedure:
+(i) Writing C program
+
+a. Create a C program
+
+#include <stdio.h>
+
+int main()
+{
+    int a = 5, b = 10, c;
+    c = a + b;
+    printf("%d", c);
+}
+
+b. Save file
+
+(ii) Convert C to Assembly
+
+a. Compile to assembly
+
+Open terminal
+Run:
+gcc -S program.c
+
+b. View assembly file
+
+Open generated file program.s
+(iii) Analyze assembly code
+
+a. Identify sections
+
+data → variables
+text → instructions
+
+b. Understand variable storage
+
+Observe how a, b, c are stored
+
+c. Analyze instructions
+
+Example:
+
+movl $5, -4(%rbp)
+movl $10, -8(%rbp)
+
+d. Arithmetic operations
+
+Identify addition:
+addl %eax, %edx
+
+e. Function call
+
+Observe printf call in assembly
+(iv) Stack & registers
+
+a. Understand stack frame
+
+rbp → base pointer
+rsp → stack pointer
+
+b. Trace execution
+
+Follow instructions step-by-step
+Observation:
+The C program was successfully converted into assembly code
+Variable assignments in C were translated into mov instructions
+The addition operation was represented using arithmetic instructions such as add
+The output function printf() appeared as a function call in assembly
+The stack frame showed how local variables were managed using registers like rbp & rsp
+The practical helped in understanding the relationship between high-level C statements & low-level instructions
+Result:
+
+The practical was completed successfully. The generated assembly code clearly showed how C language constructs such as variable declarations, arithmetic operations & function calls are translated into low-level instructions. This improved understanding of program execution at machine level.
+
+
+
+
+
+
+
+PRACTICAL – 6
+Aim:
+
+To analyze a malware executable using IDA Pro and understand its internal structure, functions and behavior through disassembly.
+
+Objectives:
+To understand static malware analysis
+To identify malicious strings and API calls
+To study control flow and behavior of malware
+Procedure:
+(i) Load malware in IDA
+Open IDA Pro
+Load sample.exe
+(ii) Auto analysis
+Allow IDA to perform automatic disassembly
+(iii) Entry point analysis
+Locate entry point
+Analyze initialization flow
+(iv) String analysis
+Identify suspicious strings (URLs, cmd, powershell)
+(v) Cross-reference analysis
+Track where suspicious strings are used
+(vi) Control flow analysis
+Study graph view & loops
+(vii) API call analysis
+Identify functions like:
+CreateFile
+WriteFile
+Registry values
+WinExec
+(viii) Function identification
+Rename functions based on behavior
+(ix) Behavioral analysis
+Check for:
+File creation
+Registry changes
+Network communication
+Observation:
+Malware exhibited persistence via registry
+Suspicious commands executed using cmd and powershell
+Network communication to malicious URL detected
+Loop behavior indicated beaconing activity
+Result:
+
+The malware sample was successfully analyzed using IDA Pro, revealing its internal structure, malicious behavior and persistence mechanisms.
